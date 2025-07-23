@@ -338,6 +338,25 @@ function InventoryList()
         )
     }
 
+    const deleteInventory = async(inventoryid) => {
+        try
+        {
+            await axios.delete(`http://localhost:3000/inventory/delete/${inventoryid}`);
+
+            const res = await axios.post(`http://localhost:3000/allInventory`)
+            
+            if(res)
+            {
+                let dataDb = res.data.datadb;
+                setDataDbVal(dataDb)
+            }
+        }
+        catch(err)
+        {
+            console.log(err)
+        }
+    }
+
     useEffect(() => 
     {
         const getInventoryData = async() => {
@@ -380,7 +399,7 @@ function InventoryList()
         (
             <Stack direction="row" spacing={2}>
                 <Link to={`/inventory/${params.row.id}`}>Edit</Link>
-                <Link to={`/inventory/delete/${params.row.id}`}>Delete</Link>
+                <Link onClick={() => {deleteInventory(params.row.id)}}>Delete</Link>
             </Stack>
         )
      }
@@ -399,9 +418,11 @@ function InventoryList()
                 </Backdrop>
             }
 
-            <Link to="/inventory/create" className="float-right" style={{ textDecoration: 'none' }}>
-                <Button variant="contained">Create Inventory Item</Button>
-            </Link>
+            <Box display="flex" justifyContent="flex-end" padding={2}>
+                <Link to="/inventory/create" className="float-right" style={{ textDecoration: 'none' }}>
+                    <Button variant="contained">Create Inventory Item</Button>
+                </Link>
+            </Box>
 
             <Paper sx={{ height: '100%', width: '100%' }}>
                 <DataGrid

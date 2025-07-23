@@ -3,8 +3,12 @@ import cors from 'cors';
 import dayjs from 'dayjs';
 import connection from './db.js';
 
+import dotenv from 'dotenv'
+
+dotenv.config(); 
+
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -77,6 +81,24 @@ app.get('/', (req, res) => {
             {
                 console.log(err)
                 res.send('error').status(404)
+            }
+        })
+    })
+
+    app.delete('/delete/order/:id', (req, res) => {
+        let id = req.params.id;
+
+        let query = `UPDATE orders SET deleted = 1 WHERE id = ${id}`;
+
+        connection.query(query, (err, results) => {
+            
+            if(results.affectedRows > 0)
+            {
+                res.send('success').status(200)    
+            }
+            else
+            {
+                console.log(err)
             }
         })
     })
@@ -157,10 +179,21 @@ app.get('/', (req, res) => {
         })
     })
 
-    app.get('/inventory/delete/:id', (req, res) => {
+    app.delete('/inventory/delete/:id', (req, res) => {
         let id = req.params.id;
 
-        console.log(req);
+        let query = `DELETE FROM inventory WHERE id = ${id}`;
+
+        connection.query(query, (err, results) => {
+            if(results.affectedRows > 0)
+            {
+                res.send('success').status(200)
+            }
+            else
+            {
+                console.log(err)
+            }
+        })
     })
 
 /* Inventory management ends */
@@ -198,7 +231,7 @@ app.get('/', (req, res) => {
     })
 
     app.post('/allOrders', (req, res) => {
-        let query = `SELECT * FROM orders ORDER BY order_name ASC`;
+        let query = `SELECT * FROM orders WHERE deleted = 0 ORDER BY order_name ASC`;
 
         connection.query(query, (err, results) => {
 
@@ -218,6 +251,6 @@ app.get('/', (req, res) => {
 
 /* Listings end */
 
-app.listen(port, () => {
+app.listen(process.env.PORT, () => {
     console.log('Running on port 3000')
 })

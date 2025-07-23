@@ -329,6 +329,21 @@ function OrderList()
         )
     }
 
+    const deleteOrder = async(orderid) => {
+        try
+        {
+            await axios.delete(`http://localhost:3000/delete/order/${orderid}`);
+
+            const res = await axios.post('http://localhost:3000/allOrders');
+
+            let datadb = res.data.datadb;
+            setDataDbVal(datadb)    
+        }
+        catch(err)
+        {
+            console.log(err)
+        }
+    }   
 
     useEffect(() => {
         const getOrderData = async() => {
@@ -371,7 +386,10 @@ function OrderList()
         width: 130, 
         renderCell: (params) => 
         (
-            <Link to={`/order/${params.row.id}`}>Edit</Link>
+            <Stack direction="row" spacing={2}>
+                <Link to={`/order/${params.row.id}`}>Edit</Link>
+                <Link onClick={() => {deleteOrder(params.row.id)}}>Delete</Link>
+            </Stack>
         )
      },
     ];
@@ -388,9 +406,11 @@ function OrderList()
                 </Backdrop>
             }
 
-            <Link to="/order/create" className="float-right" style={{ textDecoration: 'none' }}>
-                <Button variant="contained">Create Order</Button>
-            </Link>
+            <Box display="flex" justifyContent="flex-end" padding={2}>
+                <Link to="/order/create" className="float-right" style={{ textDecoration: 'none'}}>
+                    <Button variant="contained">Create Order</Button>
+                </Link>
+            </Box>
             
             <Paper sx={{ height: '100%', width: '100%' }}>
                 <DataGrid
