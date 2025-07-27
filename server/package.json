@@ -4,8 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start:dev": "dotenv -e .env.development -- nodemon index.js",
-    "start:prod": "dotenv -e .env.production -- nodemon index.js"
+    "start": "nodemon index.js",
+    "start:dev": "cross-env NODE_ENV=development dotenv -e .env.development -- nodemon index.js",
+    "start:prod": "cross-env NODE_ENV=production dotenv -e .env.production -- nodemon index.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,12 +14,13 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dayjs": "^1.11.13",
-    "dotenv": "^17.2.0",
+    "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "mysql": "^2.18.1",
     "nodemon": "^3.1.10"
   },
   "devDependencies": {
+    "cross-env": "^10.0.0",
     "dotenv-cli": "^9.0.0"
   }
 }

@@ -251,6 +251,6 @@ app.get('/', (req, res) => {
 
 /* Listings end */
 
-app.listen(process.env.PORT, () => {
+app.listen(PORT, () => {
     console.log('Running on port 3000')
 })
