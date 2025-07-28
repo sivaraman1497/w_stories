@@ -9,6 +9,16 @@ import './App.css'
 
 function App()
 {
+
+    function ErrorComponent()
+    {
+        return (
+            <>
+                <h1>Error</h1>
+            </>
+        )
+    }
+
     return (
         <Router>
                 <Routes>
@@ -21,6 +31,7 @@ function App()
                     <Route path='/orders' element={<OrderList/>}/>
 
                     <Route path='/my' element={<Dashboard/>}/>
+                    <Route path="*" element={<ErrorComponent/>}/>
                 </Routes>
         </Router>
     )
