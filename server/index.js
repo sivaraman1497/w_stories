@@ -8,9 +8,11 @@ import dotenv from 'dotenv'
 dotenv.config(); 
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
-app.use(cors());
+app.use(cors({
+	origin:'http://whiskedstories.s3-website-us-east-1.amazonaws.com'
+}));
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -251,6 +253,6 @@ app.get('/', (req, res) => {
 
 /* Listings end */
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log('Running on port 3000')
 })
