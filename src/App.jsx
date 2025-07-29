@@ -1,4 +1,5 @@
-import {Route, Routes, BrowserRouter as Router, Link} from 'react-router-dom'
+// import {Route, Routes, BrowserRouter as Router, Link} from 'react-router-dom'
+import {Route, Routes, HashRouter as Router, Link} from 'react-router-dom'
 
 import {Orders, EditOrder, OrderList} from './forms/Orders'
 import {CreateInventory, UpdateInventory, InventoryList} from './forms/Inventory'
