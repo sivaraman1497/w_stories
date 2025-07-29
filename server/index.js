@@ -233,23 +233,30 @@ app.get('/', (req, res) => {
     })
 
     app.post('/allOrders', (req, res) => {
-        let query = `SELECT * FROM orders WHERE deleted = 0 ORDER BY order_name ASC`;
+  const query = `SELECT * FROM orders WHERE deleted = 0 ORDER BY order_name ASC`;
 
-        connection.query(query, (err, results) => {
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error('Database query error:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
 
-            let datadb = results.map((val, index) =>  (
-                {...val, 
-                    sno: index+1, 
-                    quantity: `${val.quantity} ${val.quantity_type}`, 
-                    timecreated: (val.timecreated > 0) ? dayjs.unix(val.timecreated).format('DD-MM-YYYY') : '-',
-                    timemodified: (val.timemodified > 0) ? dayjs.unix(val.timemodified).format('DD-MM-YYYY') : '-',
-                    action: `${val.id}`
-                }
-            ));
+    if (!results || !Array.isArray(results)) {
+      return res.status(500).json({ error: 'Unexpected result from database' });
+    }
 
-            res.send({datadb})
-        })
-    })
+    const datadb = results.map((val, index) => ({
+      ...val,
+      sno: index + 1,
+      quantity: `${val.quantity} ${val.quantity_type}`,
+      timecreated: val.timecreated > 0 ? dayjs.unix(val.timecreated).format('DD-MM-YYYY') : '-',
+      timemodified: val.timemodified > 0 ? dayjs.unix(val.timemodified).format('DD-MM-YYYY') : '-',
+      action: `${val.id}`,
+    }));
+
+    return res.status(200).json({ datadb });
+  });
+});
 
 /* Listings end */
 
