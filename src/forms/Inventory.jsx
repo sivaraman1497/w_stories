@@ -49,7 +49,7 @@ function CreateInventory() {
         if(!data) return;
         
         try{
-            const response = await axios.post('http://localhost:3000/inventory/create', data)
+            const response = await axios.post('http://44.201.226.92:3000/inventory/create', data)
             console.log(response)
         }
         catch(err)
@@ -202,7 +202,7 @@ function UpdateInventory()
         const getDataDb = async () => {
             try
             {
-                const response = await axios.post(`http://localhost:3000/inventory/${id}`, [id]);
+                const response = await axios.post(`http://44.201.226.92:3000/inventory/${id}`, [id]);
                 setDataDb(response.data)
             }
             catch(err)
@@ -233,7 +233,7 @@ function UpdateInventory()
 
     const onSubmit = async (data) => {
         try{
-            const response = await axios.post(`http://localhost:3000/inventory/update/${id}`, data)
+            const response = await axios.post(`http://44.201.226.92:3000/inventory/update/${id}`, data)
 
             setUpdateDataStatus({status: 'loading'});
 
@@ -341,9 +341,9 @@ function InventoryList()
     const deleteInventory = async(inventoryid) => {
         try
         {
-            await axios.delete(`http://localhost:3000/inventory/delete/${inventoryid}`);
+            await axios.delete(`http://44.201.226.92:3000/inventory/delete/${inventoryid}`);
 
-            const res = await axios.post(`http://localhost:3000/allInventory`)
+            const res = await axios.post(`http://44.201.226.92:3000/allInventory`)
             
             if(res)
             {
@@ -361,7 +361,7 @@ function InventoryList()
     {
         const getInventoryData = async() => {
             try{
-                let inventoryData = await axios.post('http://localhost:3000/allInventory');
+                let inventoryData = await axios.post('http://44.201.226.92:3000/allInventory');
                 
                 if(inventoryData)
                 {

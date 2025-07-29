@@ -45,7 +45,7 @@ function Orders()
     const onSubmit = async (data) => 
     {
         try {
-            const response = await axios.post('http://localhost:3000/insertOrder', data)
+            const response = await axios.post('http://44.201.226.92:3000/insertOrder', data)
         }
         catch(err)
         {
@@ -188,7 +188,7 @@ function EditOrder()
         {
             try
             {
-                const res = await axios.get(`http://localhost:3000/order/${id}`)
+                const res = await axios.get(`http://44.201.226.92:3000/order/${id}`)
                 setdataDb(res.data)
             }
             catch(err)
@@ -220,7 +220,7 @@ function EditOrder()
 
     const onSubmit = async (data) => {
 
-        const res = await axios.post(`http://localhost:3000/order/update/${id}`, data);
+        const res = await axios.post(`http://44.201.226.92:3000/order/update/${id}`, data);
         
         setUpdateDataStatus({status: 'loading'});
 
@@ -332,9 +332,9 @@ function OrderList()
     const deleteOrder = async(orderid) => {
         try
         {
-            await axios.delete(`http://localhost:3000/delete/order/${orderid}`);
+            await axios.delete(`http://44.201.226.92:3000/delete/order/${orderid}`);
 
-            const res = await axios.post('http://localhost:3000/allOrders');
+            const res = await axios.post('http://44.201.226.92:3000/allOrders');
 
             let datadb = res.data.datadb;
             setDataDbVal(datadb)    
@@ -349,7 +349,7 @@ function OrderList()
         const getOrderData = async() => {
             try
             {
-                let inventoryData = await axios.post('http://localhost:3000/allOrders');
+                let inventoryData = await axios.post('http://44.201.226.92:3000/allOrders');
                 
                 if(inventoryData)
                 {
