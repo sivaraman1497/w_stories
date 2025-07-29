@@ -39,10 +39,10 @@ app.get('/', (req, res) => {
         let timecreated = dayjs().unix();
         let timemodified = 0;
 
-        const query = `INSERT INTO orders (order_name, quantity, price, units, quantity_type, status, expected_date, actual_date, customer_info, timecreated, timemodified) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        const query = `INSERT INTO orders (order_name, quantity, price, units, quantity_type, status, expected_date, actual_date, customer_info, timecreated, timemodified, deleted) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)`
 
         connection.query(query, [ order_name, quantity, price, units, quantity_type, status, expected_date_of_deliveryval, actual_date_of_deliveryval, customer_info, timecreated, timemodified ], (err, results) => {
-            console.log(err)
+            console.log(results);
         })
     })
 
